@@ -11,7 +11,7 @@ Resources:
   GatherHubBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
-      Bucket: !Ref GatherHubS3Bucket
+      Bucket: !Ref GatherHubFrontendBucket
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
