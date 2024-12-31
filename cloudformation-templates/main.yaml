@@ -1,10 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 
 Resources:
-  # Nested Stack for Base Resources (S3, Cognito, DynamoDB, SNS)
-  BaseStack:
+  # Nested Stack for S3 Resources (Bucket)
+  S3Stack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: 'https://s3.amazonaws.com/mybucket/base/s3.yaml'  # URL to your S3-hosted template for base resources
+      TemplateURL: 'https://s3.amazonaws.com/gatherhub-cloudformation-templates/s3.yaml'
 
- 
+  # Nested Stack for Cognito Resources
+  CognitoStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 'https://s3.amazonaws.com/gatherhub-cloudformation-templates/cognito.yaml'
