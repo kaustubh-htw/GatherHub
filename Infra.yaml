@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: GatherHub Event Management System CloudFormation Stack
+
+Resources:
+  # S3 Bucket for hosting the frontend files
+  GatherHubFrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: gatherhub-frontend
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+
+  # S3 Bucket Policy for public read access to the frontend S3 bucket
+  GatherHubFrontendBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref GatherHubFrontendBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          Effect: Allow
+          Principal: "*"
+          Action: "s3:GetObject"
+          Resource: !Sub "arn:aws:s3:::gatherhub-frontend/*"
+
+  # Cognito User Pool for authentication
+  GatherHubUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: GatherHubUserPool
+      AliasAttributes:
+        - email
+        - username
+      AutoVerifiedAttributes:
+        - email
+      MfaConfiguration: OFF
+
+  # Cognito User Pool Client (for app access)
+  GatherHubUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: GatherHubClient
+      UserPoolId: !Ref GatherHubUserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+
+  # DynamoDB Table for event data
+  GatherHubEventsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: GatherHubEvents
+      AttributeDefinitions:
+        - AttributeName: EventId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: EventId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+
+  # SNS Topic for notifications
+  GatherHubEventNotifications:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: GatherHubEventNotifications
+
+Outputs:
+  FrontendBucket:
+    Description: "Frontend S3 Bucket Name"
+    Value: !Ref GatherHubFrontendBucket
+  UserPoolId:
+    Description: "Cognito User Pool ID"
+    Value: !Ref GatherHubUserPool
+  UserPoolClientId:
+    Description: "Cognito User Pool Client ID"
+    Value: !Ref GatherHubUserPoolClient
+  EventsTableName:
+    Description: "DynamoDB Events Table Name"
+    Value: !Ref GatherHubEventsTable
+  EventNotificationsTopic:
+    Description: "SNS Topic ARN"
+    Value: !Ref GatherHubEventNotifications
