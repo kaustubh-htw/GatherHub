@@ -1,0 +1,9 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  GatherHubFrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: gatherhub-frontend
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html

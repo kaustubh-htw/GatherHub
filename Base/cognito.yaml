@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  GatherHubCognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: gatherhub-userpool
+      AliasAttributes:
+        - email        # Email as alias attribute
+        - username     # Username as alias attribute
+      AutoVerifiedAttributes:
+        - email        # Automatically verify email address
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: true
+          ExpirePasswords: true
+          MaxPasswordAge: 90
+          PasswordReusePrevention: 5
+      MfaConfiguration: OFF  # You can enable multi-factor authentication here if needed
