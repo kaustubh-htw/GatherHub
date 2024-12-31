@@ -31,12 +31,18 @@ Resources:
       UserPoolName: GatherHubUserPool
       AliasAttributes:
         - email
-        - username
+        - preferred_username
       AutoVerifiedAttributes:
         - email
       MfaConfiguration: OFF
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireUppercase: true
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: true
 
-  # Cognito User Pool Client (for app access)
   GatherHubUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
@@ -46,6 +52,8 @@ Resources:
       ExplicitAuthFlows:
         - ALLOW_USER_PASSWORD_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
+      SupportedIdentityProviders:
+        - COGNITO
 
   # DynamoDB Table for event data
   GatherHubEventsTable:
