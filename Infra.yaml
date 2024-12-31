@@ -12,17 +12,17 @@ Resources:
         ErrorDocument: error.html
 
   # S3 Bucket Policy for public read access to the frontend S3 bucket
-  # GatherHubFrontendBucketPolicy:
-  #   Type: AWS::S3::BucketPolicy
-  #   Properties:
-  #     Bucket: !Ref GatherHubFrontendBucket
-  #     PolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #         - Effect: Allow
-  #           Principal: "*"
-  #           Action: "s3:GetObject"
-  #           Resource: !Sub "arn:aws:s3:::gatherhub-frontend/*"
+  GatherHubFrontendBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref GatherHubFrontendBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::gatherhub-frontend/*"
 
   # Cognito User Pool for authentication
   GatherHubUserPool:
