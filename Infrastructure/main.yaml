@@ -2,9 +2,9 @@ Resources:
   S3Stack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://raw.githubusercontent.com/kaustubh-htw/main/GatherHub/Infrastructure/gatherhub-S3.yaml
+      TemplateURL: https://github.com/kaustubh-htw/GatherHub/blob/main/Infrastructure/gatherhub-S3.yaml
   CognitoStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://raw.githubusercontent.com/kaustubh-htw/main/GatherHub/Infrastructure/cognito.yaml
+      TemplateURL: https://github.com/kaustubh-htw/GatherHub/blob/main/Infrastructure/cognito.yaml
  
