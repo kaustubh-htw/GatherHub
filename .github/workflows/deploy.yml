@@ -21,4 +21,4 @@ jobs:
 
       - name: Sync templates to S3
         run: |
-          aws s3 sync ./path/to/templates/ s3://gatherhub-cloudformation-templates/
+          aws s3 sync  s3://gatherhub-cloudformation-templates/
