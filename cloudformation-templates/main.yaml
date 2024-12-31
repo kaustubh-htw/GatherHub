@@ -5,10 +5,10 @@ Resources:
   S3Stack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: 'https://s3.amazonaws.com/gatherhub-cloudformation-templates/s3.yaml'
+      TemplateURL: 'https://gatherhub-cloudformation-templates.s3.eu-west-1.amazonaws.com/s3.yaml'
 
   # Nested Stack for Cognito Resources
   CognitoStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: 'https://s3.amazonaws.com/gatherhub-cloudformation-templates/cognito.yaml'
+      TemplateURL: 'https://gatherhub-cloudformation-templates.s3.eu-west-1.amazonaws.com/cognito.yaml'
