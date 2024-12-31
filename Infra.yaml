@@ -19,30 +19,30 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          Effect: Allow
-          Principal: "*"
-          Action: "s3:GetObject"
-          Resource: !Sub "arn:aws:s3:::gatherhub-frontend/*"
+          - Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::gatherhub-frontend/*"
 
   # Cognito User Pool for authentication
   GatherHubUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
       UserPoolName: GatherHubUserPool
-      AliasAttributes:
+      UsernameAttributes:
         - email
-        - preferred_username
       AutoVerifiedAttributes:
         - email
-      MfaConfiguration: OFF
+      MfaConfiguration: "OFF"
       Policies:
         PasswordPolicy:
           MinimumLength: 8
           RequireUppercase: true
           RequireLowercase: true
           RequireNumbers: true
-          RequireSymbols: true
+          RequireSymbols: false
 
+  # Cognito User Pool Client
   GatherHubUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
@@ -50,10 +50,8 @@ Resources:
       UserPoolId: !Ref GatherHubUserPool
       GenerateSecret: false
       ExplicitAuthFlows:
-        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_USER_SRP_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
-      SupportedIdentityProviders:
-        - COGNITO
 
   # DynamoDB Table for event data
   GatherHubEventsTable:
