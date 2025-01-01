@@ -1,92 +1,88 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: GatherHub Event Management System CloudFormation Stack
+Description: 'Infrastructure for GatherHub static website with authentication, notification, and storage'
 
 Resources:
-  # S3 Bucket for hosting the frontend files
-  GatherHubFrontendBucket:
+  # S3 Bucket for static website hosting
+  GatherHubWebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: gatherhub-frontend
+      BucketName: !Sub '${AWS::StackName}-website'
+      AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
 
-  # S3 Bucket Policy for public read access to the frontend S3 bucket
-  # GatherHubFrontendBucketPolicy:
-  #   Type: AWS::S3::BucketPolicy
-  #   Properties:
-  #     Bucket: !Ref GatherHubFrontendBucket
-  #     PolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #         - Effect: Allow
-  #           Principal: "*"
-  #           Action: "s3:GetObject"
-  #           Resource: !Sub "arn:aws:s3:::gatherhub-frontend/*"
+  # Bucket policy to allow public read access
+  GatherHubWebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref GatherHubWebsiteBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join ['', ['arn:aws:s3:::', !Ref GatherHubWebsiteBucket, '/*']]
 
   # Cognito User Pool for authentication
   GatherHubUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      UserPoolName: GatherHubUserPool
-      UsernameAttributes:
-        - email
+      UserPoolName: !Sub '${AWS::StackName}-user-pool'
       AutoVerifiedAttributes:
         - email
-      MfaConfiguration: "OFF"
       Policies:
         PasswordPolicy:
           MinimumLength: 8
-          RequireUppercase: true
           RequireLowercase: true
           RequireNumbers: true
-          RequireSymbols: false
+          RequireSymbols: true
+          RequireUppercase: true
 
   # Cognito User Pool Client
   GatherHubUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
-      ClientName: GatherHubClient
+      ClientName: !Sub '${AWS::StackName}-client'
       UserPoolId: !Ref GatherHubUserPool
       GenerateSecret: false
       ExplicitAuthFlows:
         - ALLOW_USER_SRP_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
 
-  # DynamoDB Table for event data
-  GatherHubEventsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: GatherHubEvents
-      AttributeDefinitions:
-        - AttributeName: EventId
-          AttributeType: S
-      KeySchema:
-        - AttributeName: EventId
-          KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-
-  # SNS Topic for notifications
-  GatherHubEventNotifications:
+  # SNS Topic for user notifications
+  GatherHubNotificationTopic:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: GatherHubEventNotifications
+      TopicName: !Sub '${AWS::StackName}-notifications'
+
+  # DynamoDB Table for storage
+  GatherHubStorageTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${AWS::StackName}-storage'
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
 
 Outputs:
-  FrontendBucket:
-    Description: "Frontend S3 Bucket Name"
-    Value: !Ref GatherHubFrontendBucket
-  UserPoolId:
-    Description: "Cognito User Pool ID"
+  GatherHubWebsiteURL:
+    Description: 'URL for the static website'
+    Value: !GetAtt GatherHubWebsiteBucket.WebsiteURL
+  GatherHubUserPoolId:
+    Description: 'ID of the Cognito User Pool'
     Value: !Ref GatherHubUserPool
-  UserPoolClientId:
-    Description: "Cognito User Pool Client ID"
+  GatherHubUserPoolClientId:
+    Description: 'ID of the Cognito User Pool Client'
     Value: !Ref GatherHubUserPoolClient
-  EventsTableName:
-    Description: "DynamoDB Events Table Name"
-    Value: !Ref GatherHubEventsTable
-  EventNotificationsTopic:
-    Description: "SNS Topic ARN"
-    Value: !Ref GatherHubEventNotifications
+  GatherHubNotificationTopicArn:
+    Description: 'ARN of the SNS Topic'
+    Value: !Ref GatherHubNotificationTopic
+  GatherHubDynamoDBTableName:
+    Description: 'Name of the DynamoDB Table'
+    Value: !Ref GatherHubStorageTable
