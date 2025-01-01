@@ -7,7 +7,6 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub '${AWS::StackName}-website'
-      AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
@@ -24,6 +23,7 @@ Resources:
             Principal: '*'
             Action: 's3:GetObject'
             Resource: !Join ['', ['arn:aws:s3:::', !Ref GatherHubWebsiteBucket, '/*']]
+
 
   # Cognito User Pool for authentication
   GatherHubUserPool:
