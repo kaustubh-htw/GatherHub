@@ -22,4 +22,4 @@ jobs:
 
       - name: Sync files to S3
         run: |
-          aws s3 sync ./frontend/ http://gatherhub-website.s3-website-eu-west-1.amazonaws.com --delete --exclude ".git/*"
+          aws s3 sync ./frontend/ s3://gatherhub-website --delete --exclude ".git/*"
