@@ -30,6 +30,7 @@ Resources:
             Resource: !Join ['', ['arn:aws:s3:::', !Ref GatherHubWebsiteBucket, '/*']]
 
 
+
   # Cognito User Pool for authentication
   GatherHubUserPool:
     Type: AWS::Cognito::UserPool
@@ -62,6 +63,7 @@ Resources:
     Properties:
       TopicName: !Sub '${AWS::StackName}-notifications'
 
+
   # DynamoDB Table for storage
   GatherHubStorageTable:
     Type: AWS::DynamoDB::Table
@@ -75,59 +77,67 @@ Resources:
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
 
-    # Lambda function for event creation
-  GatherHubEventCreationFunction:
-    Type: AWS::Lambda::Function
+ # S3 Bucket for Lambda code
+  LambdaCodeS3Bucket:
+    Type: AWS::S3::Bucket
     Properties:
-      FunctionName: !Sub '${AWS::StackName}-event-creation'
-      Runtime: python3.9
-      Handler: index.event_create_handler  # Placeholder handler name, can be updated later
-      Role: !GetAtt GatherHubLambdaExecutionRole.Arn
-      Timeout: 30  # Set appropriate timeout based on your use case
+      BucketName: !Sub '${AWS::StackName}-lambda-code'
+      VersioningConfiguration:
+        Status: Enabled  # Optional, but useful for keeping track of Lambda versions
+      AccessControl: Private  # Restrict access to the bucket to prevent public access
+#     # Lambda function for event creation
+#   GatherHubEventCreationFunction:
+#     Type: AWS::Lambda::Function
+#     Properties:
+#       FunctionName: !Sub '${AWS::StackName}-event-creation'
+#       Runtime: python3.9
+#       Handler: index.event_create_handler  # Placeholder handler name, can be updated later
+#       Role: !GetAtt GatherHubLambdaExecutionRole.Arn
+#       Timeout: 30  # Set appropriate timeout based on your use case
 
-  # Lambda function for event update
-  GatherHubEventUpdateFunction:
-    Type: AWS::Lambda::Function
-    Properties:
-      FunctionName: !Sub '${AWS::StackName}-event-update'
-      Runtime: python3.9
-      Handler: index.event_update_handler  # Placeholder handler name, can be updated later
-      Role: !GetAtt GatherHubLambdaExecutionRole.Arn
-      Timeout: 30
+#   # Lambda function for event update
+#   GatherHubEventUpdateFunction:
+#     Type: AWS::Lambda::Function
+#     Properties:
+#       FunctionName: !Sub '${AWS::StackName}-event-update'
+#       Runtime: python3.9
+#       Handler: index.event_update_handler  # Placeholder handler name, can be updated later
+#       Role: !GetAtt GatherHubLambdaExecutionRole.Arn
+#       Timeout: 30
 
-  # Lambda function for user registration for event
-  GatherHubUserRegistrationFunction:
-    Type: AWS::Lambda::Function
-    Properties:
-      FunctionName: !Sub '${AWS::StackName}-user-registration'
-      Runtime: python3.9
-      Handler: index.user_registration_handler  # Placeholder handler name, can be updated later
-      Role: !GetAtt GatherHubLambdaExecutionRole.Arn
-      Timeout: 30
-#IAM for Lambda
-  GatherHubLambdaExecutionRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Sub '${AWS::StackName}-lambda-role'
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action: sts:AssumeRole
-      Policies:
-        - PolicyName: LambdaBasicPermissions
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - dynamodb:PutItem
-                  - dynamodb:UpdateItem
-                  - dynamodb:DescribeTable
-                  - sns:Publish
-                Resource: "*"
+#   # Lambda function for user registration for event
+#   GatherHubUserRegistrationFunction:
+#     Type: AWS::Lambda::Function
+#     Properties:
+#       FunctionName: !Sub '${AWS::StackName}-user-registration'
+#       Runtime: python3.9
+#       Handler: index.user_registration_handler  # Placeholder handler name, can be updated later
+#       Role: !GetAtt GatherHubLambdaExecutionRole.Arn
+#       Timeout: 30
+# #IAM for Lambda
+#   GatherHubLambdaExecutionRole:
+#     Type: AWS::IAM::Role
+#     Properties:
+#       RoleName: !Sub '${AWS::StackName}-lambda-role'
+#       AssumeRolePolicyDocument:
+#         Version: '2012-10-17'
+#         Statement:
+#           - Effect: Allow
+#             Principal:
+#               Service: lambda.amazonaws.com
+#             Action: sts:AssumeRole
+#       Policies:
+#         - PolicyName: LambdaBasicPermissions
+#           PolicyDocument:
+#             Version: '2012-10-17'
+#             Statement:
+#               - Effect: Allow
+#                 Action:
+#                   - dynamodb:PutItem
+#                   - dynamodb:UpdateItem
+#                   - dynamodb:DescribeTable
+#                   - sns:Publish
+#                 Resource: "*"
 
 
 
