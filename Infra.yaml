@@ -120,7 +120,7 @@ Resources:
 #       Timeout: 30
 
 #IAM for Lambda
-  GatherHubLambdaExecutionRole:
+GatherHubLambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
       RoleName: !Sub '${AWS::StackName}-lambda-role'
