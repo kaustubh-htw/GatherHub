@@ -75,6 +75,76 @@ Resources:
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
 
+  GatherHubEventCreationFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-event-creation'
+      Runtime: python3.9
+      Handler: lambda_function.lambda_handler
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import uuid
+
+          dynamodb = boto3.resource('dynamodb')
+          table_name = '${GatherHubStorageTable}'
+          table = dynamodb.Table(table_name)
+
+          def lambda_handler(event, context):
+              try:
+                  # Parse the event details
+                  event_details = json.loads(event['body'])
+                  event_id = str(uuid.uuid4())  # Generate unique ID
+                  
+                  # Prepare the item
+                  item = {
+                      'id': event_id,
+                      'name': event_details['name'],
+                      'description': event_details['description'],
+                      'date': event_details['date'],
+                      'location': event_details['location']
+                  }
+
+                  # Store the event in DynamoDB
+                  table.put_item(Item=item)
+
+                  # Return success response
+                  return {
+                      'statusCode': 200,
+                      'body': json.dumps({'message': 'Event created successfully!', 'eventId': event_id})
+                  }
+              except Exception as e:
+                  return {
+                      'statusCode': 500,
+                      'body': json.dumps({'message': 'Error creating event', 'error': str(e)})
+                  }
+
+      Role: !GetAtt GatherHubLambdaExecutionRole.Arn
+
+  GatherHubLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${AWS::StackName}-lambda-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:DescribeTable
+                Resource: !GetAtt GatherHubStorageTable.Arn
+
+
 Outputs:
   GatherHubWebsiteURL:
     Description: 'URL for the static website'
