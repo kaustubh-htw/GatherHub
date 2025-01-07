@@ -92,7 +92,7 @@ Resources:
     Properties:
       FunctionName: !Sub '${AWS::StackName}-event-creation'
       Runtime: python3.9
-      Handler: index.event_create_handler  # Placeholder handler name, can be updated later
+      Handler: index.lambda_handler  # Placeholder handler name, can be updated later
       Role: !GetAtt GatherHubLambdaExecutionRole.Arn
       Timeout: 30  # Set appropriate timeout based on your use case
       Code:
