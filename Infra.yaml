@@ -85,7 +85,20 @@ Resources:
       VersioningConfiguration:
         Status: Enabled  # Optional, but useful for keeping track of Lambda versions
       AccessControl: Private  # Restrict access to the bucket to prevent public access
-      
+
+LambdaCodeS3BucketPolicy:
+  Type: AWS::S3::BucketPolicy
+  Properties:
+    Bucket: !Ref LambdaCodeS3Bucket
+    PolicyDocument:
+      Version: '2012-10-17'
+      Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: 's3:GetObject'
+          Resource: !Join ['', ['arn:aws:s3:::', !Ref LambdaCodeS3Bucket, '/*']]
+          
     # Lambda function for event creation
   GatherHubEventCreationFunction:
     Type: AWS::Lambda::Function
