@@ -98,6 +98,9 @@ Resources:
       Code:
         S3Bucket: !Ref  LambdaCodeS3Bucket  # The S3 bucket containing the zip file with index.py
         S3Key: event_registration_handler/index.zip  # The path to the zip file in the S3 bucket
+      Environment:
+       Variables:
+        TABLE_NAME: !Ref GatherHubStorageTable
 
 #   # Lambda function for event update
 #   GatherHubEventUpdateFunction:
