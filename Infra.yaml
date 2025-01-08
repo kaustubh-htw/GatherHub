@@ -17,7 +17,7 @@ Resources:
         RestrictPublicBuckets: false
 
   # Bucket policy to allow public read access
-  GatherHubWebsiteBucketPolicy:
+ GatherHubWebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref GatherHubWebsiteBucket
@@ -32,7 +32,7 @@ Resources:
 
 
   # Cognito User Pool for authentication
-  GatherHubUserPool:
+ GatherHubUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
       UserPoolName: !Sub '${AWS::StackName}-user-pool'
@@ -58,7 +58,7 @@ Resources:
         - ALLOW_REFRESH_TOKEN_AUTH
 
   # SNS Topic for user notifications
-  GatherHubNotificationTopic:
+ GatherHubNotificationTopic:
     Type: AWS::SNS::Topic
     Properties:
       TopicName: !Sub '${AWS::StackName}-notifications'
@@ -78,42 +78,42 @@ Resources:
       BillingMode: PAY_PER_REQUEST
 
  # S3 Bucket for Lambda code
-  LambdaCodeS3Bucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub '${AWS::StackName}-lambda-code'
-      VersioningConfiguration:
-        Status: Enabled  # Optional, but useful for keeping track of Lambda versions
-      AccessControl: Private  # Restrict access to the bucket to prevent public access
+ LambdaCodeS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: !Sub '${AWS::StackName}-lambda-code'
+        VersioningConfiguration:
+          Status: Enabled  # Optional, but useful for keeping track of Lambda versions
+        AccessControl: Private  # Restrict access to the bucket to prevent public access
 
-LambdaCodeS3BucketPolicy:
-  Type: AWS::S3::BucketPolicy
-  Properties:
-    Bucket: !Ref LambdaCodeS3Bucket
-    PolicyDocument:
-      Version: '2012-10-17'
-      Statement:
-        - Effect: Allow
-          Principal:
-            Service: lambda.amazonaws.com
-          Action: 's3:GetObject'
-          Resource: !Join ['', ['arn:aws:s3:::', !Ref LambdaCodeS3Bucket, '/*']]
+ LambdaCodeS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref LambdaCodeS3Bucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: 's3:GetObject'
+            Resource: !Join ['', ['arn:aws:s3:::', !Ref LambdaCodeS3Bucket, '/*']]
           
     # Lambda function for event creation
   GatherHubEventCreationFunction:
-    Type: AWS::Lambda::Function
-    Properties:
-      FunctionName: !Sub '${AWS::StackName}-event-creation'
-      Runtime: python3.9
-      Handler: index.lambda_handler  # Placeholder handler name, can be updated later
-      Role: !GetAtt GatherHubLambdaExecutionRole.Arn
-      Timeout: 30  # Set appropriate timeout based on your use case
-      Code:
-        S3Bucket: !Ref  LambdaCodeS3Bucket  # The S3 bucket containing the zip file with index.py
-        S3Key: event_registration_handler/index.zip  # The path to the zip file in the S3 bucket
-      Environment:
-       Variables:
-        TABLE_NAME: !Ref GatherHubStorageTable
+      Type: AWS::Lambda::Function
+      Properties:
+        FunctionName: !Sub '${AWS::StackName}-event-creation'
+        Runtime: python3.9
+        Handler: index.lambda_handler  # Placeholder handler name, can be updated later
+        Role: !GetAtt GatherHubLambdaExecutionRole.Arn
+        Timeout: 30  # Set appropriate timeout based on your use case
+        Code:
+          S3Bucket: !Ref  LambdaCodeS3Bucket  # The S3 bucket containing the zip file with index.py
+          S3Key: event_registration_handler/index.zip  # The path to the zip file in the S3 bucket
+        Environment:
+         Variables:
+          TABLE_NAME: !Ref GatherHubStorageTable
 
 #   # Lambda function for event update
 #   GatherHubEventUpdateFunction:
@@ -136,7 +136,7 @@ LambdaCodeS3BucketPolicy:
 #       Timeout: 30
 
 #IAM for Lambda
-GatherHubLambdaExecutionRole:
+ GatherHubLambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
       RoleName: !Sub '${AWS::StackName}-lambda-role'
