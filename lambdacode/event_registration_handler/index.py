@@ -3,6 +3,8 @@ import boto3
 from datetime import datetime
 from botocore.exceptions import ClientError
 
+#hey from us
+
 # Initialize DynamoDB client
 dynamodb = boto3.resource('dynamodb')
 table_name = os.environ['TABLE_NAME'] 
