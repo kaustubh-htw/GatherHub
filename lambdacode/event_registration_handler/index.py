@@ -5,8 +5,8 @@ from botocore.exceptions import ClientError
 
 # Initialize DynamoDB client
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('GatherHubStorageTable')  # DynamoDB table name
-
+table_name = os.environ['TABLE_NAME'] 
+table = dynamodb.Table(table_name)
 def lambda_handler(event, context):
     """
     This function registers a new event for a user.
