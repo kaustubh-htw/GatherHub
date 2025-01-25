@@ -26,8 +26,9 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
             },
             body: JSON.stringify(eventData) ,// Send eventData as a plain JSON object, not stringified twice
             
-            
+         
         });
+        console.log('Sending data:', JSON.stringify(eventData));
 
         // Parse the response body into JSON
         const result = await response.json();
