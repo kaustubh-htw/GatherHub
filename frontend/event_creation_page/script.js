@@ -1,10 +1,10 @@
 document.getElementById('eventForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); // Prevent the default form submission behavior
 
     // Get input values from the form fields
-    const name = sanitizeInput(document.getElementById('name').value);
-    const date = sanitizeInput(document.getElementById('date').value);
-    const venue = sanitizeInput(document.getElementById('venue').value);
+    const name = document.getElementById('name').value;
+    const date = document.getElementById('date').value;
+    const venue = document.getElementById('venue').value;
     const ticketPrice = parseFloat(document.getElementById('ticketPrice').value); // Ensure ticketPrice is a float
 
     const responseMessage = document.getElementById('responseMessage'); // Display success/error message
@@ -24,7 +24,9 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
             headers: {
                 'Content-Type': 'application/json' // Set the content type to JSON
             },
-            body: JSON.stringify(eventData) // Send eventData as a plain JSON object, not stringified twice
+            body: JSON.stringify(eventData) ,// Send eventData as a plain JSON object, not stringified twice
+            
+            
         });
 
         // Parse the response body into JSON
@@ -44,9 +46,3 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
         responseMessage.textContent = `Error: ${error.message || 'An unexpected error occurred'}`;
     }
 });
-
-// Sanitize user input to avoid bad characters
-function sanitizeInput(input) {
-    // Escape problematic characters like newlines, carriage returns, or quotes
-    return input.replace(/[\r\n\"\\]/g, '\\$&');
-}
