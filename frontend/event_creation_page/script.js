@@ -24,11 +24,11 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
             headers: {
                 'Content-Type': 'application/json' // Set the content type to JSON
             },
-            body: JSON.stringify(eventData) ,// Send eventData as a plain JSON object, not stringified twice
+            body: eventData ,// Send eventData as a plain JSON object, not stringified twice
             
          
         });
-        console.log('Sending data:', JSON.stringify(eventData));
+        console.log('Sending data:', eventData);
 
         // Parse the response body into JSON
         const result = await response.json();
