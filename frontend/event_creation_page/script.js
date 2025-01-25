@@ -10,16 +10,8 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
     const responseMessage = document.getElementById('responseMessage'); // Display success/error message
 
     // Create event data object
-    const eventData = {
-        name: name,
-        date: date,
-        venue: venue,
-        ticketPrice: ticketPrice
-    };
-    const stringifiedEventData = JSON.stringify(eventData);
-    const payload = {
-        body: stringifiedEventData
-    };
+    const eventData = {name:name,date:date,venue:venue,ticketPrice:ticketPrice};
+    console.log(eventData);
 
     try {
         // Send data to the backend API using fetch
@@ -28,20 +20,21 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
             headers: {
                 'Content-Type': 'application/json' // Set the content type to JSON
             },
-            body: JSON.stringify(payload)// Send eventData as a plain JSON object, not stringified twice
-            
-         
+            body:JSON.stringify({ body:JSON.stringify(eventData) })// Send eventData directly, not stringified twice
         });
-        console.log('Sending data:', JSON.stringify(payload));
 
-        // Parse the response body into JSON
+        console.log(response)
+        console.log(JSON.stringify({ body: JSON.stringify(eventData) }))
+
+        // Parse the response body into JSON once
         const result = await response.json();
+        const eventId = JSON.parse(result.body).id;
         console.log(result);
 
         // Check if the response was successful
         if (response.ok) {
             responseMessage.style.color = 'green'; // Set success color
-            responseMessage.textContent = `Event created successfully! Event ID: ${result.id}`;
+            responseMessage.textContent = `Event created successfully! Event ID: ${eventId}`;
         } else {
             responseMessage.style.color = 'red'; // Set error color
             responseMessage.textContent = `Error: ${result.error || 'Unknown error'}`; // Display error message
