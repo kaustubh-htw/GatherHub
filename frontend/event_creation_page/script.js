@@ -16,6 +16,10 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
         venue: venue,
         ticketPrice: ticketPrice
     };
+    const stringifiedEventData = JSON.stringify(eventData);
+    const payload = {
+        body: stringifiedEventData
+    };
 
     try {
         // Send data to the backend API using fetch
@@ -24,14 +28,15 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
             headers: {
                 'Content-Type': 'application/json' // Set the content type to JSON
             },
-            body: eventData ,// Send eventData as a plain JSON object, not stringified twice
+            body: JSON.stringify(payload)// Send eventData as a plain JSON object, not stringified twice
             
          
         });
-        console.log('Sending data:', eventData);
+        console.log('Sending data:', JSON.stringify(payload));
 
         // Parse the response body into JSON
         const result = await response.json();
+        console.log(result);
 
         // Check if the response was successful
         if (response.ok) {
