@@ -1,10 +1,10 @@
 document.getElementById('eventForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
+    event.preventDefault(); // Prevent default form submission
 
     // Get input values from the form fields
-    const name = document.getElementById('name').value;
-    const date = document.getElementById('date').value;
-    const venue = document.getElementById('venue').value;
+    const name = sanitizeInput(document.getElementById('name').value);
+    const date = sanitizeInput(document.getElementById('date').value);
+    const venue = sanitizeInput(document.getElementById('venue').value);
     const ticketPrice = parseFloat(document.getElementById('ticketPrice').value); // Ensure ticketPrice is a float
 
     const responseMessage = document.getElementById('responseMessage'); // Display success/error message
@@ -44,3 +44,9 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
         responseMessage.textContent = `Error: ${error.message || 'An unexpected error occurred'}`;
     }
 });
+
+// Sanitize user input to avoid bad characters
+function sanitizeInput(input) {
+    // Escape problematic characters like newlines, carriage returns, or quotes
+    return input.replace(/[\r\n\"\\]/g, '\\$&');
+}
