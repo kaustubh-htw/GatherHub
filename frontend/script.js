@@ -12,7 +12,7 @@ function checkAuth() {
 // Event button click actions
 document.getElementById('createEventBtn').addEventListener('click', () => {
   // Redirect to Create Event page
-  window.location.href = '/create-event'; // Replace with the actual Create Event page URL
+  window.location.href = '/https://d25y1yi7czhljn.cloudfront.net'; // Replace with the actual Create Event page URL
 });
 
 document.getElementById('registerEventBtn').addEventListener('click', () => {
