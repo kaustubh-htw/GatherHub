@@ -10,9 +10,9 @@ function checkAuth() {
 }
 
 // Event button click actions
-document.getElementById('createEventBtn').addEventListener('click', () => {
+document.getElementById('createEvent').addEventListener('click', () => {
   // Redirect to Create Event page
-  window.location.href = '/https://d25y1yi7czhljn.cloudfront.net'; // Replace with the actual Create Event page URL
+  window.location.href = 'https://gatherhub-website.s3.eu-west-1.amazonaws.com/event_creation_page/index.html'; // Replace with the actual Create Event page URL
 });
 
 document.getElementById('registerEventBtn').addEventListener('click', () => {
