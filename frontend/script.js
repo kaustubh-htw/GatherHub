@@ -1,13 +1,13 @@
 // Check if user is logged in by verifying access_token or id_token
-function checkAuth() {
-  const accessToken = localStorage.getItem('access_token');
-  const idToken = localStorage.getItem('id_token');
+// function checkAuth() {
+//   const accessToken = localStorage.getItem('access_token');
+//   const idToken = localStorage.getItem('id_token');
 
-  if (!accessToken || !idToken) {
-    alert('You need to log in first.');
-    window.location.href = '/https://eu-west-1nqzilphn1.auth.eu-west-1.amazoncognito.com/login?client_id=6dj6abdhm6500vroqo6918ide6&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fd1tgztvbo79v27.cloudfront.net';  // Redirect to login page or Cognito login page
-  }
-}
+//   if (!accessToken || !idToken) {
+//     alert('You need to log in first.');
+//     window.location.href = '/https://eu-west-1nqzilphn1.auth.eu-west-1.amazoncognito.com/login?client_id=6dj6abdhm6500vroqo6918ide6&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fd1tgztvbo79v27.cloudfront.net';  // Redirect to login page or Cognito login page
+//   }
+// }
 
 // Event button click actions
 document.getElementById('createEvent').addEventListener('click', () => {
