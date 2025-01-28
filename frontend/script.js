@@ -1,7 +1,7 @@
 // Check if user is logged in by verifying access_token or id_token
 function checkAuth() {
-  const accessToken = localStorage.getItem('access_token');
-  const idToken = localStorage.getItem('id_token');
+  const accessToken = sessionStorage.getItem('access_token');
+  const idToken = sessionStorage.getItem('id_token');
   const urlParams = new URLSearchParams(window.location.search);
   const authCode = urlParams.get('code'); // Extract authorization code from URL
 
@@ -20,7 +20,7 @@ function checkAuth() {
   // Optional: Validate token expiration
   if (isTokenExpired(accessToken) || isTokenExpired(idToken)) {
     alert('Your session has expired. Please log in again.');
-    localStorage.clear();
+    sessionStorage.clear();
     window.location.href = 'https://nqzilphn1.auth.eu-west-1.amazoncognito.com/login?client_id=6dj6abdhm6500vroqo6918ide6&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fd1tgztvbo79v27.cloudfront.net';
     return;
   }
@@ -61,9 +61,9 @@ function exchangeAuthCodeForTokens(authCode) {
       return response.json();
     })
     .then((tokens) => {
-      // Store the tokens in localStorage
-      localStorage.setItem('access_token', tokens.access_token);
-      localStorage.setItem('id_token', tokens.id_token);
+      // Store the tokens in sessionStorage
+      sessionStorage.setItem('access_token', tokens.access_token);
+      sessionStorage.setItem('id_token', tokens.id_token);
 
       // Remove the auth code from the URL
       window.history.replaceState({}, document.title, '/');
