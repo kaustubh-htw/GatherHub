@@ -23,6 +23,7 @@ document.getElementById("feedbackForm").addEventListener("submit", async functio
             },
             body: JSON.stringify(feedbackData),
         });
+        console.log(JSON.stringify(feedbackData));
 
         if (!response.ok) {
             throw new Error("Failed to submit feedback");
