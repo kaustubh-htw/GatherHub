@@ -1,7 +1,7 @@
 document.getElementById("feedbackForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    const eventId = document.getElementById("eventName").value;
+    const eventName = document.getElementById("eventName").value;
     // const userId = document.getElementById("userId").value;
     const rating = document.getElementById("rating").value;
     const comment = document.getElementById("comment").value;
