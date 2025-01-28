@@ -24,9 +24,9 @@ document.getElementById('registerEvent').addEventListener('click', () => {
   window.location.href = 'https://gatherhub-website.s3.eu-west-1.amazonaws.com/register_event/events.html'; // Replace with the actual Register Event page URL
 });
 
-document.getElementById('updateEvent').addEventListener('click', () => {
+document.getElementById('Feedback').addEventListener('click', () => {
   // Redirect to Update Event page
-  window.location.href = '/update-event'; // Replace with the actual Update Event page URL
+  window.location.href = 'https://gatherhub-website.s3.eu-west-1.amazonaws.com/feedback/feedback.html'; // Replace with the actual Update Event page URL
 });
 
 // On page load, check if the user is authenticated
