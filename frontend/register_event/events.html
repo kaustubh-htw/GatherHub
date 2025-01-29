@@ -17,6 +17,10 @@
       background-repeat: no-repeat; /* Prevent repeating the image */
       background-attachment: fixed; /* Keep the background image fixed when scrolling */
       background-size: cover; /* Scale the image to cover the entire viewport */
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     }
 
     h1 {  
@@ -29,11 +33,11 @@
     }
 
     #event-list {
-      max-width: 600px;
-      margin: 0 auto;
+      width: 600px;
+      /* margin: 0 auto; */
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 5px;
     }
 
     .event {
@@ -46,20 +50,20 @@
 
     .event h3 {
       margin: 0;
-      font-size: 1.2em;
+      font-size: 1.5em;
       color: #007bff;
     }
 
     .event p {
       margin: 5px 0;
-      font-size: 0.9em;
+      font-size: 1rem;
       color: #555;
     }
 
     .event button {
       display: inline-block;
       padding: 8px 12px;
-      font-size: 0.9em;
+      font-size: 1rem;
       border: none;
       background-color: #4CAF50;;
       color: white;
@@ -77,27 +81,23 @@
       font-size: 1em;
       color: #666;
     }
-    .event-header{
-      display: flex;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-      margin-left:465px;
-
-      width: 605px;
-     
-
-    }
+    .event-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
   </style>
 </head>
 <body>
   <div class="event-header">
-  <h1>Available Events</h1>
+  <h1>Upcoming Events</h1>
 </div>
   <div id="event-list"></div>
 
