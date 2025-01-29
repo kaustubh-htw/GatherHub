@@ -14,14 +14,16 @@ document.getElementById("feedbackForm").addEventListener("submit", async functio
         rating: parseInt(rating),
         comment: comment,
     };
-
+    const payload = {
+        body: JSON.stringify(feedbackData)
+    };
     try {
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(JSON.stringify(feedbackData)),
+            body: JSON.stringify(payload),
         });
         console.log(JSON.stringify(JSON.stringify(feedbackData)));
 
