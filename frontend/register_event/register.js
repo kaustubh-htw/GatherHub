@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               body: JSON.stringify(payload),
           });
 
-          if (response.ok) {
+          if (response.message === '200') {
               alert(`Registration successful! A confirmation email has been sent to ${email}.`);
               // Redirect to events page
               window.location.href = "events.html";
