@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
   // Get event name from URL
   const urlParams = new URLSearchParams(window.location.search);
-  const eventName = urlParams.get("eventName");
+  const eventName = urlParams.get("event");
 
   if (eventName) {
       // Decode and set the event name in the form and hidden input
