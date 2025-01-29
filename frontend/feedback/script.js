@@ -21,7 +21,7 @@ document.getElementById("feedbackForm").addEventListener("submit", async functio
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(feedbackData),
+            body: JSON.stringify(JSON.stringify(feedbackData)),
         });
         console.log(JSON.stringify(JSON.stringify(feedbackData)));
 
