@@ -1,39 +1,66 @@
-document.addEventListener("DOMContentLoaded", () => {
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", async function () {
   // Get event name from URL
   const urlParams = new URLSearchParams(window.location.search);
   const eventName = urlParams.get("event");
 
   if (eventName) {
-      // Decode the event name (in case of URL encoding)
+      // Decode and set the event name in the form and hidden input
       const decodedEventName = decodeURIComponent(eventName);
-
-      // Display the event name in the form
       document.getElementById("event-name").textContent = decodedEventName;
-
-      // Store event name in hidden input field
       document.getElementById("event-input").value = decodedEventName;
   } else {
       document.getElementById("event-name").textContent = "Unknown Event";
   }
 
-  // Back to Home Page button functionality
-  document.getElementById("back").addEventListener("click", () => {
-      window.location.href = "https://gatherhub-website.s3.eu-west-1.amazonaws.com/event_list.html";
-  });
-
   // Handle form submission
-  document.getElementById("registrationForm").addEventListener("submit", (event) => {
-      event.preventDefault(); // Prevent default form submission
+  document.getElementById("registrationForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
 
       // Collect form data
-      const formData = {
-          event: document.getElementById("event-input").value,
-          firstName: document.getElementById("firstName").value,
-          lastName: document.getElementById("lastName").value,
-          email: document.getElementById("email").value
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const selectedEvent = document.getElementById("event-input").value; // Get event name from hidden input
+
+      // Validate form data
+      if (!firstName || !lastName || !email) {
+          alert("Please fill in all fields before submitting.");
+          return;
+      }
+
+      // Prepare payload
+      const registrationData = {
+          firstName,
+          lastName,
+          email,
+          eventName: selectedEvent,
       };
 
-      console.log("Form Data:", formData);
-      alert(`Registered successfully for ${formData.event}!`);
+      try {
+          // Call the backend API (replace with your API Gateway endpoint)
+          const response = await fetch("https://your-api-gateway-url/registration", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify(registrationData),
+          });
+
+          if (response.ok) {
+              alert(`Registration successful! A confirmation email has been sent to ${email}.`);
+              // Redirect to events page
+              window.location.href = "events.html";
+          } else {
+              throw new Error("Registration failed. Please try again.");
+          }
+      } catch (error) {
+          alert(`Error: ${error.message}`);
+      }
+  });
+
+  // Back to Home Page button functionality
+  document.getElementById("back").addEventListener("click", () => {
+      window.location.href = "https://d1tgztvbo79v27.cloudfront.net/"; 
   });
 });
