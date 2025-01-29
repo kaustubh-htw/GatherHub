@@ -1,42 +1,39 @@
-// js/register.js
-document.getElementById("registrationForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
-  
-    // Collect form data
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const email = document.getElementById("email").value;
-  
-    // Prepare payload
-    const registrationData = {
-      firstName,
-      lastName,
-      email,
-      eventName: "Tech Conference 2025", // Example event name (dynamic if needed)
-    };
-  
-    try {
-      // Call the backend API (replace with your API Gateway endpoint)
-      const response = await fetch("https://your-api-gateway-url/registration", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registrationData),
-      });
-  
-      if (response.ok) {
-        alert("Registration successful! A confirmation email has been sent to your email address.");
-        // Optionally, redirect to another page
-        window.location.href = "events.html";
-      } else {
-        throw new Error("Registration failed. Please try again.");
-      }
-    } catch (error) {
-      alert(`Error: ${error.message}`);
-    }
+document.addEventListener("DOMContentLoaded", () => {
+  // Get event name from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const eventName = urlParams.get("event");
+
+  if (eventName) {
+      // Decode the event name (in case of URL encoding)
+      const decodedEventName = decodeURIComponent(eventName);
+
+      // Display the event name in the form
+      document.getElementById("event-name").textContent = decodedEventName;
+
+      // Store event name in hidden input field
+      document.getElementById("event-input").value = decodedEventName;
+  } else {
+      document.getElementById("event-name").textContent = "Unknown Event";
+  }
+
+  // Back to Home Page button functionality
+  document.getElementById("back").addEventListener("click", () => {
+      window.location.href = "https://gatherhub-website.s3.eu-west-1.amazonaws.com/event_list.html";
   });
-  document.getElementById('back').addEventListener('click', () => {
-    // Redirect to Update Event page
-    window.location.href = 'https://d1tgztvbo79v27.cloudfront.net/'; 
+
+  // Handle form submission
+  document.getElementById("registrationForm").addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent default form submission
+
+      // Collect form data
+      const formData = {
+          event: document.getElementById("event-input").value,
+          firstName: document.getElementById("firstName").value,
+          lastName: document.getElementById("lastName").value,
+          email: document.getElementById("email").value
+      };
+
+      console.log("Form Data:", formData);
+      alert(`Registered successfully for ${formData.event}!`);
+  });
 });
