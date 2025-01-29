@@ -6,16 +6,26 @@
   <title>Event List</title>
   <style>
     body {
+      background-image: url('../freepik__upload__18105.png');
+      background-size: cover;
       font-family: Arial, sans-serif;
+      height: 100%;
       margin: 0;
       padding: 20px;
       background-color: #f9f9f9;
+      background-position: center center; /* Position the image in the center */
+      background-repeat: no-repeat; /* Prevent repeating the image */
+      background-attachment: fixed; /* Keep the background image fixed when scrolling */
+      background-size: cover; /* Scale the image to cover the entire viewport */
     }
 
-    h1 {
+    h1 {  
+    
       text-align: center;
       margin-bottom: 20px;
-      color: #333;
+      color: #4CAF50;
+      font-weight: bold;
+      font-size: 2rem ;
     }
 
     #event-list {
@@ -51,7 +61,7 @@
       padding: 8px 12px;
       font-size: 0.9em;
       border: none;
-      background-color: #007bff;
+      background-color: #4CAF50;;
       color: white;
       border-radius: 4px;
       cursor: pointer;
@@ -67,10 +77,28 @@
       font-size: 1em;
       color: #666;
     }
+    .event-header{
+      display: flex;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      margin-left:465px;
+
+      width: 605px;
+     
+
+    }
   </style>
 </head>
 <body>
+  <div class="event-header">
   <h1>Available Events</h1>
+</div>
   <div id="event-list"></div>
 
   <script src="script.js"></script>
