@@ -45,3 +45,8 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
         responseMessage.textContent = `Error: ${error.message || 'An unexpected error occurred'}`;
     }
 });
+
+document.getElementById('back').addEventListener('click', () => {
+    // Redirect to Update Event page
+    window.location.href = 'https://d1tgztvbo79v27.cloudfront.net/'; 
+});
