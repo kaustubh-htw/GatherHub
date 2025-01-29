@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       try {
           // Call the backend API (replace with your API Gateway endpoint)
-          const response = await fetch("https://your-api-gateway-url/registration", {
+          const response = await fetch("https://axkg7kudal.execute-api.eu-west-1.amazonaws.com/prod/registration", {
               method: "POST",
               headers: {
                   "Content-Type": "application/json",
