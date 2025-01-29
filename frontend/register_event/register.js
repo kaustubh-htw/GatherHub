@@ -36,7 +36,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           email,
           eventName: selectedEvent,
       };
-      payload = JSON.stringify(registrationData);
+      const payload = {
+        body: JSON.stringify(registrationData)
+    };
 
       try {
           // Call the backend API (replace with your API Gateway endpoint)
@@ -48,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               body: JSON.stringify(payload),
           });
 
-          if (response.message === '200') {
+          if (response.status === 200) {
               alert(`Registration successful! A confirmation email has been sent to ${email}.`);
               // // Redirect to events page
               // window.location.href = "events.html";
