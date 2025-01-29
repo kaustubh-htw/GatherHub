@@ -50,10 +50,10 @@ document.addEventListener("DOMContentLoaded", async function () {
               body: JSON.stringify(payload),
           });
 
-          if (response.status === 200) {
+          if (response.statusCode === 200) {
               alert(`Registration successful! A confirmation email has been sent to ${email}.`);
-              // // Redirect to events page
-              // window.location.href = "events.html";
+              // Redirect to events page
+              window.location.href = "events.html";
           } else {
               throw new Error("Registration failed. Please try again.");
           }
