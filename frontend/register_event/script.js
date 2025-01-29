@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Date:</strong> ${event.date}</p>
         <p><strong>Venue:</strong> ${event.venue}</p>
         <p><strong>Ticket Price:</strong> $${event.ticketPrice}</p>
-        <button onclick="registerEvent('${event.name}', '${event.id}', event)">Register</button>
+        <button id ="register-btn">Register</button>
         `;
 
   
@@ -52,17 +52,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   // Register event function
-  function registerEvent(eventname, eventId, event) {
-    alert(`Thank you!\nYou have successfully registered for ${eventname} with ID: ${eventId}`);
-    // Add your registration logic here
-    const button = event.target;
+  // function registerEvent(eventname, eventId, event) {
+  //   alert(`Thank you!\nYou have successfully registered for ${eventname} with ID: ${eventId}`);
+  //   // Add your registration logic here
+  //   const button = event.target;
   
-  // Change the button text to "Registered"
-  button.textContent = "Registered";
-    // Change button color to green
-    button.style.backgroundColor = "green";
-    button.style.color = "white";  // Optionally change text color for better contrast
+  // // Change the button text to "Registered"
+  // button.textContent = "Registered";
+  //   // Change button color to green
+  //   button.style.backgroundColor = "green";
+  //   button.style.color = "white";  // Optionally change text color for better contrast
     
-    button.disabled = true;  // Optionally disable the button to prevent further clicks
+  //   button.disabled = true;  // Optionally disable the button to prevent further clicks
+  // }
+// Attach event listener to the container for dynamic elements
+document.getElementById("event-list").addEventListener("click", (event) => {
+  if (event.target && event.target.id === "register-btn") {
+    // Redirect to the registration page
+    window.location.href = "F:\GatherHub\GatherHub\frontend\register_event\register.html";
   }
-  
+});
