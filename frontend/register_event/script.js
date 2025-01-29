@@ -69,6 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("event-list").addEventListener("click", (event) => {
   if (event.target && event.target.id === "register-btn") {
     // Redirect to the registration page
-    window.location.href = "F:\GatherHub\GatherHub\frontend\register_event\register.html";
+    window.location.href = "https://gatherhub-website.s3.eu-west-1.amazonaws.com/register_event/register.html";
   }
 });
