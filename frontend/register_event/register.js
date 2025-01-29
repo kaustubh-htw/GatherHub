@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           email,
           eventName: selectedEvent,
       };
+      payload = JSON.stringify(registrationData);
 
       try {
           // Call the backend API (replace with your API Gateway endpoint)
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               headers: {
                   "Content-Type": "application/json",
               },
-              body: JSON.stringify(registrationData),
+              body: JSON.stringify(payload),
           });
 
           if (response.ok) {
