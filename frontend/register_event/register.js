@@ -61,6 +61,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Back to Home Page button functionality
   document.getElementById("back").addEventListener("click", () => {
-      window.location.href = "https://d1tgztvbo79v27.cloudfront.net/"; 
+      window.location.href = "https://gatherhub-website.s3.eu-west-1.amazonaws.com/register_event/events.html"; 
   });
 });
