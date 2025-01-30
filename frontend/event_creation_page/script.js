@@ -1,5 +1,11 @@
+let submitInProgress = false;
+
 document.getElementById('eventForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent the default form submission behavior
+
+    if (submitInProgress) return; // Prevent submission if already in progress
+
+    submitInProgress = true; // Set to true to indicate submission is in progress
 
     // Get input values from the form fields
     const name = document.getElementById('name').value;
