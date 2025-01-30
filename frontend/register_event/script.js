@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const eventListContainer = document.getElementById("event-list");
 
   // Fetch events from the API
-  fetch("https://5916dbaidi.execute-api.eu-west-1.amazonaws.com/prod/event-list")
+  fetch("https://w5cmwsy2fb.execute-api.eu-west-1.amazonaws.com/prod/event-list")
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

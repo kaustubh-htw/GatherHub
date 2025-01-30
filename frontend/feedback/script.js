@@ -7,7 +7,7 @@ document.getElementById("feedbackForm").addEventListener("submit", async functio
     const comment = document.getElementById("comment").value;
 
     // API URL (replace with your actual API Gateway URL)
-    const apiUrl = "https://hs1vo5huvf.execute-api.eu-west-1.amazonaws.com/prod/feedback";
+    const apiUrl = "https://w5cmwsy2fb.execute-api.eu-west-1.amazonaws.com/prod/feedback";
 
     const feedbackData = {
         eventName: eventName,

@@ -15,7 +15,7 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
 
     try {
         // Send data to the backend API using fetch
-        const response = await fetch('https://3xh06rhpg2.execute-api.eu-west-1.amazonaws.com/prod/create-event', {
+        const response = await fetch('https://w5cmwsy2fb.execute-api.eu-west-1.amazonaws.com/prod/create-event', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json' // Set the content type to JSON
