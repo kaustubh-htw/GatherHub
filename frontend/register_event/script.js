@@ -43,7 +43,7 @@ function renderEventList(events) {
           <h3>${event.name}</h3>
           <p><strong>Date:</strong> ${event.date}</p>
           <p><strong>Venue:</strong> ${event.venue}</p>
-          <p><strong>Ticket Price:</strong> $${event.ticketPrice}</p>
+          <p><strong>Ticket Price:</strong> €${event.ticketPrice}</p>
           <button class="register-btn" data-event-name="${encodedEventName}">Register</button>
       `;
 
